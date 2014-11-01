@@ -1,0 +1,361 @@
+\documentclass[12pt,german,a4]{article}
+
+\usepackage{ngerman}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes,backgrounds}
+
+\begin{document}
+
+\setlength{\parindent}{0pt}
+
+\def\firstcircle{(0,0) circle (1.5cm)}
+\def\smallfirstcircle{(0,0) circle (1cm)}
+\def\secondcircle{(0:1cm) circle (1.5cm)}
+\def\outercircle{(0:0) circle (2cm)}
+\def\smallcircle{(135:2cm) circle (0.5cm)}
+\def\smallA{(180:1.5cm) circle (0.5cm)}
+\def\smallB{(0:2.5cm) circle (0.5cm)}
+
+\title{Theoretische Informatik 1}
+\author{Fabian Heymann}
+\date{31.10.2014}
+\maketitle
+
+\section{Mathematische Grundlagen}
+
+\newtheorem{defSet}{Definition}
+\begin{defSet}
+Eine {\bf Menge}\footnote{eng. set} ist die Zusammenfassung unterscheidbarer Objekte zu einem Ganzen.\\
+(Frei nach Georg Cantor)
+\end{defSet}
+
+\newtheorem{defEle}[defSet]{Definition}
+\begin{defEle}
+Diese Objekte heißen {\bf Elemente}\footnote{eng. elements} der Menge.
+\end{defEle}
+
+Wir benennen Mengen typischerweise mit Großbuchstaben und Elemente, die selbst keine Mengen sind, mit Kleinbuchstaben.\\
+Zur Definition von Mengen stehen folgende Schreibweisen zur Verfügung:
+
+\begin{itemize}
+\item Aufzählung aller Elemente der Menge (nur bei endlichen Mengen möglich):\\
+$A := \{0, 1, 7, 42\}$\\
+Oder Angabe einer eindeutigen Folge:\\
+$A' = \{5, 6, 7, ...\}$ = \glqq Menge der natürlichen Zahlen > 4\grqq\\
+$A'' = \{7, 8, 9, ..., 42\}$ = \glqq Menge der natürlichen Zahlen > 6 und < 43\grqq
+\item Eindeutige Beschreibung aller Elemente:\\
+$B := \{x: \exists n \in \mathbb{N}: 2n = x\} \hat{=}$ \glqq Menge aller durch 2 teilbaren natürlichen Zahlen\grqq
+\item Bei Teilmengen der reelen Zahlen, die Intervallschreibweise:\\
+$C := (-2; 4] = \{x : -2 < x \le 4\}$
+\end{itemize}
+\pagebreak
+Einige besondere Zahlenmengen:
+\begin{itemize}
+\item $\mathbb{N} := \{0, 1, 2, 3, ...\} \hat{=}$ \glqq Menge der natürlichen Zahlen\grqq
+\item $\mathbb{Z} := \{0, 1, -1, 2, -2, ...\} = \mathbb{N}\ \cup -(\mathbb{N} \setminus \{0\}) \hat{=}$ \glqq Menge der ganzen Zahlen\grqq
+\item $\mathbb{Q} := \{\frac{x}{y} : x \in \mathbb{Z}, y \in \mathbb{N} \setminus \{0\}\} \hat{=}$ \glqq Menge der rationalen Zahlen\grqq
+\item $\mathbb{R}\ \hat{=}$ \glqq Menge der reelen Zahlen\grqq\ (was auch immer das sein soll)
+\item $\mathbb{C}\ \hat{=}$ \glqq Menge der komplexen Zahlen\grqq\ (nicht Teil dieser Vorlesung)
+\end{itemize}
+
+Das Elementzeichen $\in$ beschreibt die Zugehörigkeit eines Elements zu einer Menge:
+\begin{itemize}
+\item $0 \in \{0, 1, 2\}$
+\item $0 \in \mathbb{N}$
+\item $0 \not\in \{2, 3, 4\}$
+\end{itemize}
+
+\newtheorem{defEmptySet}[defSet]{Definition}
+\begin{defEmptySet}
+Die Menge, die keine Elemente enthält, heißt {\bf leere Menge\footnote{eng. empty set} $\varnothing$}.
+\end{defEmptySet}
+
+\newtheorem{defCardinality}[defSet]{Definition}
+\begin{defCardinality}
+Die Anzahl der Elemente einer endlichen Menge M bezeichnen wir als {\bf Kardinalität}\footnote{eng. cardinality} (Mächtigkeit) {\bf|M|} der Menge.
+\end{defCardinality}
+
+Beispiele:
+\begin{itemize}
+\item $A := \{0, 1, 2, 3, 4\}; |A| = 5$
+\item $B := \varnothing; |B| = 0$
+\item $C := \{\varnothing\}; |C| = 1$
+\end{itemize}
+
+\newtheorem{defSubset}[defSet]{Definition}
+\begin{defSubset}
+Eine Menge B heißt {\bf Teilmenge}\footnote{eng. subset} einer Menge A genau dann, wenn jedes Element der Menge B auch Element der Menge A ist.\\
+Schreibweise: B $\subseteq$ A\\
+Formell: $B \subseteq A \Leftrightarrow \forall b \in B : b \in A$
+\end{defSubset}
+
+\newtheorem{defEqual}[defSet]{Definition}
+\begin{defEqual}
+Zwei Mengen A und B heißen {\bf einander gleich}\footnote{eng. equal} genau dann, wenn A eine Teilmenge von B und B eine Teilmenge von A ist.\\
+Schreibweise: A = B\\
+Formell: $A = B \Leftrightarrow A \subseteq B \wedge B \subseteq A \Leftrightarrow \forall b \in B : b \in A \wedge \forall a \in A : a \in B$
+\end{defEqual}
+
+\newtheorem{defStrictSubset}[defSet]{Definition}
+\begin{defStrictSubset}
+Eine Menge B heißt {\bf  echte Teilmenge}\footnote{eng. strict subset} einer Menge A genau dann, wenn B Teilmenge von A und B nicht gleich A ist.\\
+Schreibweise: B $\subset$ A\\
+Formell: $B \subset A \Leftrightarrow B \subseteq A \wedge A \neq B \Leftrightarrow \forall b \in B : b \in A \wedge A \neq B$
+\end{defStrictSubset}
+
+\newtheorem{satz}{Satz}
+\begin{satz}
+Eigenschaften der Teilmengenrelation\\
+
+(1) Die Teilmengenrelation ist {\bf reflexiv}: $A \subseteq A$\\
+
+(2) Die Teilmengenrelation ist {\bf transitiv}: $A \subseteq B \wedge B \subseteq C \implies A \subseteq C$\\
+
+(Ohne Beweis)
+\end{satz}
+
+\newtheorem{satz2}[satz]{Satz}
+\begin{satz2}
+Die leere Menge $\varnothing$ ist Teilmenge jeder Menge.\\
+Dies folgt direkt aus der Definition der Teilmengenrelation.
+\end{satz2}
+
+\newtheorem{defComplement}[defSet]{Definition}
+\begin{defComplement}
+Sei G eine Menge und A $\subseteq$ G. Die Menge $\bar{A}$, die alle Elemente aus G enthält, die nicht in A liegen, heißt {\bf Komplementärmenge}\footnote{eng. complement} zu A bezüglich G.\\
+Formell: $a \in \bar{A} \Leftrightarrow a \in G \wedge a \not\in A$\\
+\end{defComplement}
+
+\begin{tikzpicture}
+   \begin{scope}
+      \fill[yellow] \outercircle;
+    \end{scope}
+    \draw \smallfirstcircle node{$A$};
+    \draw \outercircle node at (0:1.5cm) {$\bar{A}$};
+    \draw \smallcircle node{$G$};
+    \begin{scope}
+      \fill[white] \smallfirstcircle;
+    \end{scope}
+    \begin{scope}
+      \clip \smallcircle;
+      \fill[white] \smallcircle;
+    \end{scope}
+     \draw \smallfirstcircle node{$A$};
+     \draw \smallcircle node{$G$};
+\end{tikzpicture}
+
+\newtheorem{defUnion}[defSet]{Definition}
+\begin{defUnion}
+Seien A und B Mengen. Die Menge, die alle Elemente aus A und B enthält, heißt {\bf Vereinigungsmenge}\footnote{eng. union} von A und B.\\
+Schreibweise: $A \cup B$\\
+Formell: $x \in A \cup B \Leftrightarrow x \in A \vee x \in B$\\
+\end{defUnion}
+
+\begin{tikzpicture}
+    \draw \firstcircle;
+    \draw \secondcircle;
+    \draw \smallA;
+    \draw \smallB;
+    \begin{scope}
+      \fill[yellow] \secondcircle;
+      \fill[yellow] \firstcircle;
+    \end{scope}
+    \draw \firstcircle;
+    \draw \secondcircle;
+    \begin{scope}
+       \fill[white] \smallA;
+       \fill[white] \smallB;
+    \end{scope}
+    \draw \smallA node{$A$};
+    \draw \smallB node{$B$};
+    \draw node at(0:0.5cm){$A \cup B$};
+\end{tikzpicture}\\
+
+\newtheorem{defIntersect}[defSet]{Definition}
+\begin{defIntersect}
+Seien A und B Mengen. Die Menge, die alle Elemente enthält, die sowohl in A als auch in B enthalten sind, heißt {\bf Durchschnittsmenge}\footnote{eng. intersection} von A und B.\\
+Schreibweise: $A \cap B$\\
+Formell: $x \in A \cap B \Leftrightarrow x \in A \wedge x \in B$\\
+\end{defIntersect}
+
+\begin{tikzpicture}
+    \draw \firstcircle;
+    \draw \secondcircle;
+    \draw \smallA;
+    \draw \smallB;
+    \begin{scope}
+      \clip \secondcircle;
+      \fill[yellow] \firstcircle;
+    \end{scope}
+    \draw \firstcircle;
+    \draw \secondcircle;
+    \begin{scope}
+       \fill[white] \smallA;
+       \fill[white] \smallB;
+    \end{scope}
+    \draw \smallA node{$A$};
+    \draw \smallB node{$B$};
+    \draw node at(0:0.5cm){$A \cap B$};
+\end{tikzpicture}\\
+
+{\bf Beispiel}: \\
+
+$A := \{0, 1, 5, 7\}$\\
+$B := \{0, 1, 3, 12\}$\\
+$\implies A \cup B = \{0, 1, 3, 5, 7, 12\}$\\
+$\implies A \cap B = \{0, 1\}$
+
+\pagebreak
+
+\newtheorem{satz3}[satz]{Satz}
+\begin{satz3}
+Eigenschaften von Schnitt und Vereinigung:\\
+Seien A, B, C Mengen in einer Grundmenge G, so gilt:\\
+(1) $\varnothing \cap \varnothing = \varnothing$\\
+(2) $A \cap \varnothing = \varnothing$\\
+(3) $A \cap A = A$\\
+(4) $A \cap \bar{A} = \varnothing$\\
+(5) $A \cap B = B \cap A$ (Kommutativgesetz)\\
+(6) $(A \cap B) \cap C = A \cap (B \cap C)$ (Assoziativgesetz)\\
+(7) $A \subseteq B \implies A \cap B = A$\\
+(8) $\varnothing \cup \varnothing = \varnothing$\\
+(9) $A \cup \varnothing = A$\\
+(10) $A \cup A = A$\\
+(11) $A \cup \bar{A} = G$\\
+(12) $A \cup B = B \cup A$ (Kommutativgesetz)\\
+(13) $(A \cup B) \cup C = A \cup (B \cup C)$ (Assoziativgesetz)\\
+(14) $A \subseteq B \implies A \cup B = B$\\
+(15) $(A \cap B) \cup C) = (A \cup C) \cap (B \cup C)$ (Distributicgesetz)\\
+(16) $(A \cup B) \cap C) = (A \cap C) \cup (B \cap C)$ (Distributicgesetz)\\
+(17) $\bar{A} \cup \bar{B} = \overline{A \cap B}$ (Gesetz von de Morgan)\\
+(18) $\bar{A} \cap \bar{B} = \overline{A \cup B}$ (Gesetz von de Morgan)
+\end{satz3}
+
+\newtheorem{defDifference}[defSet]{Definition}
+\begin{defDifference}
+Seien A und B Mengen. Die Menge, die alle Elemente von A enthält, die nicht auch in B liegen, heißt {\bf Differenzmenge}\footnote{eng. difference} von A und B.\\
+Schreibweise: $A \backslash B = A \cap \bar{B}$\\
+Formell: $x \in A \backslash B \Leftrightarrow x \in A \wedge x \not\in B$\\
+Anmerkung: im Allgemeinen: $A \backslash B \neq B \backslash A$\\
+\end{defDifference}
+
+\begin{tikzpicture}
+    \draw \firstcircle;
+    \draw \secondcircle;
+    \draw \smallA;
+    \draw \smallB;
+    \begin{scope}
+      \fill[yellow] \firstcircle;
+      \fill[white] \secondcircle;
+    \end{scope}
+    \draw \firstcircle;
+    \draw \secondcircle;
+    \begin{scope}
+       \fill[white] \smallA;
+       \fill[white] \smallB;
+    \end{scope}
+    \draw \smallA node{$A$};
+    \draw \smallB node{$B$};
+    \draw node at(0:0.5cm){$A \backslash B$};
+\end{tikzpicture}\\
+
+\newtheorem{satz4}[satz]{Satz}
+\begin{satz4}
+Eigenschaften der Differenz:\\
+Seien A, B, C Mengen, so gilt:\\
+(1) $A \cap B = \varnothing \implies A \backslash B = A$\\
+(2) $A \subseteq B \implies A \backslash B = \varnothing$\\
+Im Allgemeinen gelten jedoch weder Assoziativität noch Kommutativität:\\
+(3) $A \backslash B \neq B \backslash A$\\
+(4) $(A \backslash B) \backslash C \neq A \backslash (B \backslash C)$
+\end{satz4}
+
+\newtheorem{defCartProduct}[defSet]{Definition}
+\begin{defCartProduct}
+Seien A und B Mengen. Ein Zahlenpaar (Tupel) (a, b) mit $a \in A$ und $b \in B$ heißt {\bf geordnetes Paar}\footnote{eng. ordered pair} von Elementen aus den Mengen A und B.\\
+
+Die Menge aller geordneten Paare (a, b) mit $a \in A$ und $b \in B$  heißt {\bf cartesisches Produkt}\footnote{eng. cartesian product} $A \times B$ der Mengen A und B.\\
+Formell: $A \times B := \{(x, y): x \in A \wedge y \in B\}$\\
+
+Weiterhin definieren wir für eine Menge M:\\
+(1) $M \times \varnothing = \varnothing$\\
+(2) $\varnothing \times M = \varnothing$
+\end{defCartProduct}
+
+\newtheorem{satz5}[satz]{Satz}
+\begin{satz5}
+Distributivgesetze des cartesischen Produkts:\\
+Seien A, B, C Mengen, so gilt:\\
+(1) $A \times (B \cap C) = (A \times B) \cap (A \times C)$\\
+(2) $(A \cap B) \times C = (A \times C) \cap (B \times C)$\\
+(3) $A \times (B \cup C) = (A \times B) \cup (A \times C)$\\
+(4) $(A \cup B) \times C = (A \times C) \cup (B \times C)$\\
+(5) $A \times (B \backslash C) = (A \times B) \backslash (A \times C)$\\
+(6) $(A \backslash B) \times C = (A \times C) \backslash (B \times C)$
+\end{satz5}
+
+\newtheorem{defDisjoint}[defSet]{Definition}
+\begin{defDisjoint}
+Zwei Mengen A und B heißen {\bf disjunkt}\footnote{eng. disjoint}, wenn Sie keine gemeinsamen Elemente enthalten.\\
+Formell: A und B disjunkt $\Leftrightarrow \nexists x: x \in A \wedge x \in B \Leftrightarrow A \cap B = \varnothing$
+\end{defDisjoint}
+
+\pagebreak
+
+\newtheorem{defDisjointUnion}[defSet]{Definition}
+\begin{defDisjointUnion}
+Um zwei Mengen disjunkt zu vereinigen, weisen wir jeder Menge eine eindeutige natürliche Zahl zu und vereinigen die cartesischen Produkte der Mengen mit den zugehörigen natürlichen Zahlen.\\
+Formell: A + B := $(A \times \{0\}) \cup (B \times \{1\})$\\
+\end{defDisjointUnion}
+
+\newtheorem{defPowerSet}[defSet]{Definition}
+\begin{defPowerSet}
+Sei A eine Menge. Die {\bf Potenzmenge}\footnote{eng. power set} von A, P(A), ist die Menge aller Teilmengen von A.\\
+Formell: P(A) := $\{B: B \subseteq A\}$
+\end{defPowerSet}
+
+Beispiel:\\
+Sei A := $\{a, b, c\}$\\
+$\implies P(A) = \{\varnothing, \{a\}, \{b\}, \{c\}, \{a, b\}, \{a, c\}, \{b, c\}, \{a, b, c\}\}$
+
+\newtheorem{satz6}[satz]{Satz}
+\begin{satz6}
+Drei wichtige eigenschaften der Potenzmenge:\\
+Sei A eine Menge, so gilt:\\
+(1) $|A| = n \implies |P(A)| = 2^{n}$\\
+(2) $\forall A: \varnothing \in P(A)$\\
+(3) $\forall A: A \in P(A)$
+\end{satz6}
+
+\pagebreak
+
+\newtheorem{defPowerSet}[defSet]{Definition}
+\begin{defPowerSet}
+Sei A eine Menge. Die {\bf Potenzmenge}\footnote{eng. power set} von A, P(A), ist die Menge aller Teilmengen von A.\\
+Formell: P(A) := $\{B: B \subseteq A\}$
+\end{defPowerSet}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
