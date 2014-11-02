@@ -1,0 +1,44 @@
+\documentclass[12pt,german,a4]{article}
+
+\usepackage{ngerman}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+{\bf Satz}: Abzählbare Vereinigungen abzählbarer Mengen sind wieder abzählbar.\\
+
+{\bf Beweis}:
+
+Durch Umsortieren ist leicht zu erkennen, dass gilt:\\
+
+(1): $\mathbb{N} \times \mathbb{N} = \sum_{n \in \mathbb{N}}{(\mathbb{N} \times \{n\})}$ \\
+
+Sei nun $B_{i}~ (i \in \mathbb{N})$ eine Familie abzählbarer Mengen.\\
+
+(2): $\forall i \in \mathbb{N}: B_{i}$ abzählbar $\implies \exists f_{i} : B_{i} \rightarrow \mathbb{N}: f_{i}$ injektiv\\
+
+(3): $\bigcup\{B_{i} : i \in \mathbb{N}\} = \sum\{B_{i} - \bigcup\{B_{j} : j < i\} : i \in \mathbb{N}\}$\\
+
+Da dies jeweils Teilmengen sind, gilt:\\
+
+(4): $(2) \wedge (3) \implies \forall i \in \mathbb{N}: \exists g_{i} :( B_{i} - \sum\{B_{j}: j < i\}) \rightarrow (\mathbb{N} \cup \{i\}): g_{i}$ injektiv\\
+
+Somit können wir die disjunkte Vereinigung komponentenweise nach $\mathbb{N} \times \mathbb{N}$ abbilden:\\
+
+(5): $(1) \wedge (4) \implies \exists h:  \sum\{B_{i} - \bigcup\{B_{j} : j < i\} : i \in \mathbb{N}\} \rightarrow \mathbb{N} \times \mathbb{N}: h$ injektiv\\
+
+(6): $(3) \wedge (5) \implies \exists h: \bigcup\{B_{i} : i \in \mathbb{N}\} \rightarrow \mathbb{N} \times \mathbb{N}: h$ injektiv\\
+
+Jetzt verwenden wir noch die injektive Abbildung $\varphi : \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$ aus Aufgabenteil 2:\\
+
+(7): $(6) \implies \exists h;\varphi : \bigcup\{B_{i} : i \in \mathbb{N}\} \rightarrow \mathbb{N}: h;\varphi$ injektiv\\
+
+(8): $(7) \implies \bigcup\{B_{i} : i \in \mathbb{N}\}$ ist abzählbar. $\qed$
+
+\end{document}
